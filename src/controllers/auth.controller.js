@@ -2,6 +2,9 @@
 const userModel = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+const tokenBlacklistModel = require('../models/blacklist.model');
+
 /**
  * @name registerUserController
  * @description register a new user, expects username, email and password in the request body.
@@ -110,9 +113,27 @@ async function loginUserController(req,res){
 }
 
 
+
+async function logoutUserController(req,res){
+    const token = req.cookies.token;
+
+    if(token){
+        await tokenBlacklistModel.create({token});
+    }
+
+    res.clearCookie("token");
+
+    res.status(200).json({
+        message:"User logout succesfully"
+    })
+
+}
+
+
 module.exports = {
 registerUserController,
-loginUserController
+loginUserController,
+logoutUserController
 }
 
 
