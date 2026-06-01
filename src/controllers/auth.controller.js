@@ -167,40 +167,127 @@ getMeController
 /*
  * File Description:
  * -----------------
- * This file contains authentication controller functions responsible
- * for handling user registration and login operations.
+ * This file contains all authentication-related controller functions.
+ * Controllers act as the business logic layer between routes and database models.
  *
  * Responsibilities:
- * 1. Receive authentication requests from routes.
- * 2. Validate incoming user data.
- * 3. Check if a user already exists in the database.
- * 4. Hash passwords before storing them in the database.
- * 5. Verify passwords during login.
- * 6. Generate JWT tokens for authenticated users.
- * 7. Store authentication tokens in cookies.
- * 8. Send appropriate success or error responses to the client.
+ * 1. Handle user registration requests.
+ * 2. Handle user login requests.
+ * 3. Handle user logout requests.
+ * 4. Retrieve authenticated user information.
+ * 5. Validate incoming request data.
+ * 6. Interact with MongoDB models for user and token operations.
+ * 7. Hash passwords before storing them in the database.
+ * 8. Verify passwords during login.
+ * 9. Generate JWT tokens for authenticated users.
+ * 10. Store JWT tokens in browser cookies.
+ * 11. Blacklist tokens during logout.
+ * 12. Send appropriate success and error responses.
  *
  * Controllers:
- * - registerUserController : Creates a new user account.
- * - loginUserController    : Authenticates an existing user.
  *
- * Authentication Flow:
+ * - registerUserController
+ *   Creates a new user account after validating data,
+ *   hashing the password, and generating an authentication token.
+ *
+ * - loginUserController
+ *   Authenticates an existing user by verifying email and password,
+ *   then generates a JWT token for future requests.
+ *
+ * - logoutUserController
+ *   Logs out the current user by clearing the authentication cookie
+ *   and storing the JWT token in the blacklist collection.
+ *
+ * - getMeController
+ *   Returns information about the currently authenticated user.
+ *   Requires successful authentication through middleware.
+ *
+ * Complete Authentication Flow:
  *
  * Registration:
- * Client → Route → Controller
- *        → Validate Data
- *        → Check Existing User
- *        → Hash Password
- *        → Save User
- *        → Generate JWT Token
- *        → Store Token in Cookie
- *        → Response
+ * User
+ *  │
+ *  ▼
+ * Register Route
+ *  │
+ *  ▼
+ * Validate Data
+ *  │
+ *  ▼
+ * Check Existing User
+ *  │
+ *  ▼
+ * Hash Password
+ *  │
+ *  ▼
+ * Save User
+ *  │
+ *  ▼
+ * Generate JWT
+ *  │
+ *  ▼
+ * Store JWT in Cookie
+ *  │
+ *  ▼
+ * Success Response
  *
  * Login:
- * Client → Route → Controller
- *        → Validate Credentials
- *        → Verify Password
- *        → Generate JWT Token
- *        → Store Token in Cookie
- *        → Response
+ * User
+ *  │
+ *  ▼
+ * Login Route
+ *  │
+ *  ▼
+ * Verify Email
+ *  │
+ *  ▼
+ * Compare Password
+ *  │
+ *  ▼
+ * Generate JWT
+ *  │
+ *  ▼
+ * Store JWT in Cookie
+ *  │
+ *  ▼
+ * Success Response
+ *
+ * Protected Route Access:
+ * User Request
+ *  │
+ *  ▼
+ * Authentication Middleware
+ *  │
+ *  ▼
+ * Read JWT from Cookie
+ *  │
+ *  ▼
+ * Verify Token
+ *  │
+ *  ▼
+ * Check Blacklist
+ *  │
+ *  ▼
+ * Attach User Data to req.user
+ *  │
+ *  ▼
+ * Controller Executes
+ *
+ * Logout:
+ * User
+ *  │
+ *  ▼
+ * Logout Route
+ *  │
+ *  ▼
+ * Read JWT from Cookie
+ *  │
+ *  ▼
+ * Save Token in Blacklist
+ *  │
+ *  ▼
+ * Clear Cookie
+ *  │
+ *  ▼
+ * Logout Success Response
  */

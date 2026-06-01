@@ -52,14 +52,57 @@ module.exports = authRouter;
 /*
  * File Description:
  * -----------------
- * This file defines authentication-related routes for the application.
+ * This file defines all authentication-related API routes of the application.
  *
  * Its responsibilities are:
  * 1. Create a dedicated router for authentication operations.
  * 2. Map API endpoints to their corresponding controller functions.
- * 3. Receive incoming authentication requests and forward them to controllers.
- * 4. Export the router so it can be integrated into the main application.
+ * 3. Apply authentication middleware to protected routes.
+ * 4. Forward incoming requests to the appropriate controller.
+ * 5. Export the router for integration into the main Express application.
  *
- * Current Routes:
- * - POST /register : Register a new user account.
+ * Authentication Routes:
+ *
+ * Public Routes:
+ * - POST /register
+ *   Registers a new user account.
+ *
+ * - POST /login
+ *   Authenticates an existing user and generates a JWT token.
+ *
+ * - GET /logout
+ *   Logs out the current user by clearing the authentication cookie
+ *   and invalidating the token if a blacklist mechanism is implemented.
+ *
+ * Protected Routes:
+ * - GET /get-me
+ *   Returns details of the currently authenticated user.
+ *   Requires a valid JWT token and authentication middleware.
+ *
+ * Route Flow:
+ *
+ * Public Request
+ *      │
+ *      ▼
+ * Auth Routes
+ *      │
+ *      ▼
+ * Controller
+ *      │
+ *      ▼
+ * Response
+ *
+ * Protected Request
+ *      │
+ *      ▼
+ * Auth Routes
+ *      │
+ *      ▼
+ * Authentication Middleware
+ *      │
+ *      ▼
+ * Controller
+ *      │
+ *      ▼
+ * Response
  */
