@@ -2,8 +2,14 @@ import React from 'react'
 import "../auth.form.scss"
 import "../../../styles/button.scss"
 import { Link ,useNavigate } from 'react-router'
+import { useAuth } from '../hooks/useAuth'
 
 const Login = () => {
+
+    const{loading,handleLogin} =useAuth();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = (e) =>{
         e.preventDefault();
