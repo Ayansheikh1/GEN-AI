@@ -1,0 +1,20 @@
+4 layers rchitecture
+
+
+UI
+=> components
+=> pages
+
+
+Hook => managing hook and api layers
+=>hook
+
+
+State =>data stores
+=>auth.context.js  
+=>ai.context.js
+
+
+Api => for communication with backend
+=> service
+    =>auth.api.js
