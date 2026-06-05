@@ -8,7 +8,7 @@ Summary:
 Results-driven software engineer with 5 years of experience in developing scalable web applications. Proficient in JavaScript, Node.js, and React. Passionate about building efficient and user-friendly
     solutions.      
         
-    Experience: s
+    Experience: 
     Software Engineer | Tech Company | June 2019 - Present      
         - Developed and maintained web applications using Node.js and React, resulting in a 20% increase in user engagement.
             - Collaborated with cross-functional teams to design and implement new features, improving overall product performance by 15%.
