@@ -64,13 +64,13 @@ Self Description: ${selfDescription}`;
         }
     });
 
-    console.log("Raw:", response.text);
+   
 
     // Strip markdown fences if still present
     const raw = response.text.replace(/```json\n?|\n?```/g, "").trim();
 
     const interviewReport = interviewReportSchema.parse(JSON.parse(raw));
-    console.log("✅ Validated:", JSON.stringify(interviewReport, null, 2));
+
     return interviewReport;
 }
 
