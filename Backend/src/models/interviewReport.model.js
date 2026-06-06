@@ -1,7 +1,7 @@
 const moongoose = require('mongoose');
 
 
-const texhnicalQuestionSchema = new moongoose.Schema({
+const technicalQuestionSchema = new moongoose.Schema({
     question:{
         type:String,    
         required:[true,"technical question is required"]
@@ -86,10 +86,14 @@ const interviewReportSchema = new moongoose.Schema({
         min:0,
         max:100,
     },
-    texhnicalQuestionSchema:[texhnicalQuestionSchema],
-    behavioralQuestionSchema:[behavioralQuestionSchema],
-    skillGapSchema:[skillGapSchema],
-    preparationPlanSchema:[preparationPlanSchema]
+    technicalQuestions:[technicalQuestionSchema],
+    behavioralQuestions:[behavioralQuestionSchema],
+    skillGaps:[skillGapSchema],
+    preparationPlan:[preparationPlanSchema],
+    user:{
+        type:moongoose.Schema.Types.ObjectId,
+        ref:"users"
+    }
 },{
     timestamps:true
 });
