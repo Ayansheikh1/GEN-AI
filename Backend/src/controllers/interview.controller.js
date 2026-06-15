@@ -2,6 +2,13 @@ const pdfParse = require('pdf-parse');
 const interviewReportModel = require('../models/interviewReport.model');
 const { generateInterviewReport } = require('../services/ai.service');
 
+
+/** 
+ * @desc Generate an interview report based on the provided job description and self description.
+ * @route POST /api/interview
+ * @access Private
+ */
+
 async function generateInterviewReportController(req, res) {
   
 
@@ -30,6 +37,37 @@ async function generateInterviewReportController(req, res) {
 
 }
 
+/**
+ * @desc Retrieve a specific interview report.
+ * @route GET /api/interview/report/:interviewId
+ * @access Private
+ */
+async function getInterviewReportController(req,res){
+const {interviewId} = req.params;
 
+const interviewReport = await interviewReportModel.findOne({_id:interviewId,user:req.user.id});
 
-module.exports = { generateInterviewReportController };
+if(!interviewReport){
+    return res.status(404).json({message:"Interview report not found"});
+}
+
+res.status(200).json({
+    message:"Interview report retrieved successfully",
+    interviewReport
+})
+}
+
+/**
+ * @desc Retrieve all interview reports for the authenticated user.
+ * @route GET /api/interview/reports
+ */
+
+async function getAllInterviewReportsController(req,res){
+    const interviewReports = await interviewReportModel.find({user:req.user.id}).sort({createdAt:-1}).select("-resume , -jobDescription , -selfDescription , -technicalQuestions , -behavioralQuestions , -skillGaps , -preparationPlan , __v"); // Exclude sensitive content for listing
+    res.status(200).json({
+        message:"Interview reports retrieved successfully",
+        interviewReports
+    });
+}
+
+module.exports = { generateInterviewReportController,getInterviewReportController,getAllInterviewReportsController };

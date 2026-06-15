@@ -93,6 +93,10 @@ const interviewReportSchema = new moongoose.Schema({
     user:{
         type:moongoose.Schema.Types.ObjectId,
         ref:"users"
+    },
+    title:{
+        type:String,
+        required:[true,"Job title is required"]
     }
 },{
     timestamps:true
