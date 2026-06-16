@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../style/interview.scss'
 import { useInterview } from '../hooks/useInterview'
+import { useParams } from 'react-router'
 
 const NAV_ITEMS = [
     { id: 'technical', label: 'Technical Questions', icon: (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>) },
@@ -85,11 +86,17 @@ const QuestionCard = ({ item, index }) => {
 const RoadMapDay = ({ day }) => (
     <div className='roadmap-day'>
         <div className='roadmap-day__header'>
-            <span className='roadmap-day__badge'>Day {day.day}</span>
-            <h3 className='roadmap-day__focus'>{day.focus}</h3>
+            <span className='roadmap-day__badge'>
+                Day {day.day}
+            </span>
+
+            <h3 className='roadmap-day__focus'>
+                {day.focus}
+            </h3>
         </div>
+
         <ul className='roadmap-day__tasks'>
-            {day.tasks.map((task, i) => (
+            {(day.task || []).map((task, i) => (
                 <li key={i}>
                     <span className='roadmap-day__bullet' />
                     {task}
@@ -97,17 +104,39 @@ const RoadMapDay = ({ day }) => (
             ))}
         </ul>
     </div>
-)
+);
 
 // ── Main Component ────────────────────────────────────────────────────────────
 const Interview = () => {
     const [activeNav, setActiveNav] = useState('technical')
-    const {report} = useInterview();
+    const {report,getReportById,loading} = useInterview();
+    const{interviewId} = useParams()
+
+    useEffect(() => {
+
+    if(interviewId){
+        getReportById(interviewId);
+    }
+      
+    }, [interviewId])
+
+
+    if(loading || !report){
+        return(
+            <main>
+                <h1>Loading .....</h1>
+            </main>
+        )
+    }
+    
+
    
 
     const scoreColor =
         report.matchScore >= 80 ? 'score--high' :
             report.matchScore >= 60 ? 'score--mid' : 'score--low'
+
+
 
     return (
         <div className='interview-page'>
