@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../style/interview.scss'
+import { useInterview } from '../hooks/useInterview'
 
 const NAV_ITEMS = [
     { id: 'technical', label: 'Technical Questions', icon: (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>) },
@@ -8,48 +9,50 @@ const NAV_ITEMS = [
 ]
 
 // ── Mock Data ──────────────────────────────────────────────────────────────
-const MOCK_REPORT = {
-    matchScore: 87,
-    technicalQuestions: [
-        {
-            question: 'Explain the Node.js event loop and how it enables non-blocking I/O.',
-            intention: 'Assess understanding of asynchronous programming fundamentals.',
-            answer: 'Describe the event loop phases, how callbacks are queued, and the role of libuv in handling I/O operations off the main thread.'
-        },
-        {
-            question: 'How would you optimize rendering performance in a large React application?',
-            intention: 'Evaluate knowledge of React performance patterns.',
-            answer: 'Mention React.memo, useMemo, useCallback, code-splitting with lazy loading, and virtualization for long lists.'
-        },
-        {
-            question: 'When would you choose MongoDB over MySQL for a feature?',
-            intention: 'Test database design decision-making.',
-            answer: 'Discuss schema flexibility, horizontal scaling, and use cases like unstructured or rapidly evolving data models.'
-        },
-    ],
-    behavioralQuestions: [
-        {
-            question: 'Tell me about a time you had to convince a teammate to adopt your technical approach.',
-            intention: 'Assess communication and influence skills.',
-            answer: 'Use a structured example: context, your reasoning, how you presented it, and the outcome.'
-        },
-        {
-            question: 'Describe a difficult bug you debugged and how you resolved it.',
-            intention: 'Evaluate problem-solving methodology.',
-            answer: 'Walk through your debugging process: reproducing the issue, isolating the cause, and the fix you implemented.'
-        },
-    ],
-    skillGaps: [
-        { skill: 'System Design at Scale', severity: 'medium' },
-        { skill: 'GraphQL', severity: 'low' },
-        { skill: 'Kubernetes', severity: 'high' },
-    ],
-    preparationPlan: [
-        { day: 1, focus: 'Core JavaScript & Node.js Fundamentals', tasks: ['Review event loop and async patterns', 'Practice 5 coding problems on arrays and objects'] },
-        { day: 2, focus: 'React Deep Dive', tasks: ['Study hooks lifecycle and memoization', 'Build a small component with performance optimizations'] },
-        { day: 3, focus: 'System Design Basics', tasks: ['Read about scalable architecture patterns', 'Practice designing a URL shortener'] },
-    ],
-}
+// const MOCK_REPORT = {
+//     matchScore: 87,
+//     technicalQuestions: [
+//         {
+//             question: 'Explain the Node.js event loop and how it enables non-blocking I/O.',
+//             intention: 'Assess understanding of asynchronous programming fundamentals.',
+//             answer: 'Describe the event loop phases, how callbacks are queued, and the role of libuv in handling I/O operations off the main thread.'
+//         },
+//         {
+//             question: 'How would you optimize rendering performance in a large React application?',
+//             intention: 'Evaluate knowledge of React performance patterns.',
+//             answer: 'Mention React.memo, useMemo, useCallback, code-splitting with lazy loading, and virtualization for long lists.'
+//         },
+//         {
+//             question: 'When would you choose MongoDB over MySQL for a feature?',
+//             intention: 'Test database design decision-making.',
+//             answer: 'Discuss schema flexibility, horizontal scaling, and use cases like unstructured or rapidly evolving data models.'
+//         },
+//     ],
+//     behavioralQuestions: [
+//         {
+//             question: 'Tell me about a time you had to convince a teammate to adopt your technical approach.',
+//             intention: 'Assess communication and influence skills.',
+//             answer: 'Use a structured example: context, your reasoning, how you presented it, and the outcome.'
+//         },
+//         {
+//             question: 'Describe a difficult bug you debugged and how you resolved it.',
+//             intention: 'Evaluate problem-solving methodology.',
+//             answer: 'Walk through your debugging process: reproducing the issue, isolating the cause, and the fix you implemented.'
+//         },
+//     ],
+//     skillGaps: [
+//         { skill: 'System Design at Scale', severity: 'medium' },
+//         { skill: 'GraphQL', severity: 'low' },
+//         { skill: 'Kubernetes', severity: 'high' },
+//     ],
+//     preparationPlan: [
+//         { day: 1, focus: 'Core JavaScript & Node.js Fundamentals', tasks: ['Review event loop and async patterns', 'Practice 5 coding problems on arrays and objects'] },
+//         { day: 2, focus: 'React Deep Dive', tasks: ['Study hooks lifecycle and memoization', 'Build a small component with performance optimizations'] },
+//         { day: 3, focus: 'System Design Basics', tasks: ['Read about scalable architecture patterns', 'Practice designing a URL shortener'] },
+//     ],
+// }
+
+
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 const QuestionCard = ({ item, index }) => {
@@ -99,7 +102,8 @@ const RoadMapDay = ({ day }) => (
 // ── Main Component ────────────────────────────────────────────────────────────
 const Interview = () => {
     const [activeNav, setActiveNav] = useState('technical')
-    const report = MOCK_REPORT
+    const {report} = useInterview();
+   
 
     const scoreColor =
         report.matchScore >= 80 ? 'score--high' :
