@@ -35,6 +35,7 @@ async function generateInterviewReport(resume, jobDescription, selfDescription) 
 You MUST respond with ONLY a raw JSON object — no markdown, no explanation, no extra fields.
 The JSON object MUST have EXACTLY these top-level keys:
 - "matchScore": a number (0-100)
+- "title": the job title for which this interview report is generated (e.g. "Frontend Developer")
 - "technicalQuestions": array of objects with keys: question, intention, answer
 - "behavioralQuestions": array of objects with keys: question, intention, answer  
 - "skillGaps": array of objects with keys: skill, severity (must be "low", "medium", or "high")
@@ -43,6 +44,7 @@ The JSON object MUST have EXACTLY these top-level keys:
 Example of required format:
 ${JSON.stringify({
     matchScore: 85,
+    title: "MERN Stack Developer",   // ✅ added to example
     technicalQuestions: [{ question: "...", intention: "...", answer: "..." }],
     behavioralQuestions: [{ question: "...", intention: "...", answer: "..." }],
     skillGaps: [{ skill: "...", severity: "medium" }],

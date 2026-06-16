@@ -16,6 +16,14 @@ const Home = () => {
     const data = await generateReport({jobDescription,selfDescription,resumeFile});
     navigate(`/interview/${data._id}`);
 
+    if(loading){
+        return(
+            <main className='loading-screen'>
+                <h1>Loading your Interview plan</h1>
+            </main>
+        )
+    }
+
    }
 
 

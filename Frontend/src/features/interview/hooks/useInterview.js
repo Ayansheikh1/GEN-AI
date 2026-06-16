@@ -14,26 +14,28 @@ export const useInterview = () => {
     const { loading, setLoading, report, setReport, reports, setReports } = context;
 
     const generateReport = async ({ jobDescription, selfDescription, resumeFile }) => {
-        setLoading(true);
-        let response = null;
-        try{
-            response = await generateInterviewReport({ jobDescription, selfDescription, resumeFile });
-            setReport(response.interviewReports);
-        } catch (error) {
-            console.error("Error generating interview report:", error);
-        } finally {
-            setLoading(false);
-        }
-
-        return response.interviewReports
+    setLoading(true);
+    try {
+        const response = await generateInterviewReport({ jobDescription, selfDescription, resumeFile });
+        console.log("✅ API response:", response);
+        setReport(response.interviewReport);
+        return response.interviewReport;
+    } catch (error) {
+        // ✅ this shows the actual backend error message
+        console.error("❌ Full error:", error.response?.data);
+        console.error("❌ Status:", error.response?.status);
+        console.error("❌ Message:", error.message);
+    } finally {
+        setLoading(false);
     }
+}
 
     const getReportById = async (interviewId) =>{
         setLoading(true);
         let response = null;
         try{
          response = await generateInterviewReportById(interviewId);
-            setReport(response.interviewReports);
+            setReport(response.interviewReport);
 
         }catch(err){
             console.log(err);
@@ -41,7 +43,7 @@ export const useInterview = () => {
             setLoading(false);
 
         }
-        return response.interviewReports
+        return response.interviewReport
 
         
     }
@@ -51,14 +53,14 @@ export const useInterview = () => {
         let response = null;
         try{
              response = await getAllInterviewReports();
-            setReports(response.interviewReports)
+            setReports(response.interviewReport)
         }catch(err){
             console.log(err);
         }finally{
             setLoading(false);
         }
 
-        return response.interviewReports
+        return response.interviewReport
     }
 
     return {generateReport,getReportById,getReports, loading,report,reports}
