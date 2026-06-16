@@ -63,7 +63,8 @@ res.status(200).json({
  */
 
 async function getAllInterviewReportsController(req,res){
-    const interviewReports = await interviewReportModel.find({user:req.user.id}).sort({createdAt:-1}).select("-resume , -jobDescription , -selfDescription , -technicalQuestions , -behavioralQuestions , -skillGaps , -preparationPlan , __v"); // Exclude sensitive content for listing
+    const interviewReports = await interviewReportModel.find({user:req.user.id}).sort({createdAt:-1}).select(
+  "-resume -jobDescription -selfDescription -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan -__v"); // Exclude sensitive content for listing
     res.status(200).json({
         message:"Interview reports retrieved successfully",
         interviewReports

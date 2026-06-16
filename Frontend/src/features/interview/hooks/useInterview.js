@@ -56,14 +56,14 @@ export const useInterview = () => {
         let response = null;
         try{
              response = await getAllInterviewReports();
-            setReports(response.interviewReport)
+            setReports(response.interviewReports)
         }catch(err){
             console.log(err);
         }finally{
             setLoading(false);
         }
 
-        return response.interviewReport
+        return response.interviewReports
     }
 
     useEffect(() => {

@@ -44,6 +44,6 @@ export const generateInterviewReportById = async (interviewId)=>{
  * @returns {Promise<Array>} An array of interview report data from the server.
  */ 
 export const getAllInterviewReports = async()=>{
-    const response = await api.get("/api/interview/reports");
+    const response = await api.get("/api/interview/");
     return response.data;
 }
