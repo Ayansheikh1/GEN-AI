@@ -28,6 +28,8 @@ const interviewReportSchema = z.object({
     title: z.string().describe("The title of the job for which the interview report is generated.")
 });
 
+
+
 async function generateInterviewReport(resume, jobDescription, selfDescription) {
 
     // ✅ Embed schema directly in system instruction
@@ -75,6 +77,11 @@ Self Description: ${selfDescription}`;
     const interviewReport = interviewReportSchema.parse(JSON.parse(raw));
 
     return interviewReport;
+}
+
+
+async function generateResumePdf({resume,jobDescription,selfDescription}){
+    
 }
 
 module.exports = { generateInterviewReport };
