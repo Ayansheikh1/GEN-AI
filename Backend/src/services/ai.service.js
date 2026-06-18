@@ -121,21 +121,23 @@ async function generateResumePdf({resume,jobDescription,selfDescription}){
                     `;
 
        const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-2.5-flash",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
-            responseSchema: zodToJsonSchema(resumePdfSchema),
+            thinkingConfig: { thinkingBudget: 0 }
         }
     });
     
-    const jsonContent = JSON.parse(response.text);
+    const jsonContent = resumePdfSchema.parse(JSON.parse(response.text));
 
-    const pdfBuffer = await generatePDfFromHtml(jsonContent);
+    const pdfBuffer = await generatePDfFromHtml(jsonContent.html);
 
     return pdfBuffer;
 
 
 }
+
+
 
 module.exports = { generateInterviewReport, generateResumePdf };
