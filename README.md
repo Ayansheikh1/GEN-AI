@@ -329,20 +329,6 @@ Contributions are welcome! Follow these steps:
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see LICENSE file for details.
-
-## 🎯 Roadmap
-
-- [ ] Advanced filtering and analytics
-- [ ] Mock interview video recording
-- [ ] Interview performance metrics
-- [ ] Multi-language support
-- [ ] Mobile app
-- [ ] Integration with LinkedIn
-- [ ] Email notifications
-- [ ] Subscription plans
 
 ## 👨‍💻 Author
 
