@@ -3,7 +3,7 @@ import "../auth.form.scss"
 import "../../../styles/button.scss"
 import { Link ,useNavigate } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
-
+import { useState } from 'react'
 const Register = () => {
 
     const navigate = useNavigate();
