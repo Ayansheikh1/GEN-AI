@@ -61,7 +61,7 @@ Job Description: ${jobDescription}
 Self Description: ${selfDescription}`;
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3.6-flash",
         contents: prompt,
         config: {
             systemInstruction,
@@ -139,7 +139,7 @@ TASK:
 Generate the tailored resume as clean, professional HTML. Focus on matching keywords and highlighting relevant experience.`;
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3.6-flash",
         contents: prompt,
         config: {
             systemInstruction,
